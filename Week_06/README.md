@@ -158,3 +158,390 @@ for word in test_words:
 ##### 1.比较类排序:通过比较来决定元素间的相对次序,由于其时间复杂度不能突破O(nlogn),因此成为非线性类排序
 
 ##### 2.非比较类排序:不通过比较来决定元素间的相对次序,它可以突破基于比较类的时间下界,以线性时间非比较类排序
+
+##### 1.1 交换类排序
+##### 1.1.1BubbleSort
+```
+// Java program for implementation of Bubble Sort
+class BubbleSort
+{
+	void bubbleSort(int arr[])
+	{
+		int n = arr.length;
+		for (int i = 0; i < n-1; i++)
+			for (int j = 0; j < n-i-1; j++)
+				if (arr[j] > arr[j+1])
+				{
+					// swap arr[j+1] and arr[j]
+					int temp = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = temp;
+				}
+	}
+
+	/* Prints the array */
+	void printArray(int arr[])
+	{
+		int n = arr.length;
+		for (int i=0; i<n; ++i)
+			System.out.print(arr[i] + " ");
+		System.out.println();
+	}
+
+	// Driver method to test above
+	public static void main(String args[])
+	{
+		BubbleSort ob = new BubbleSort();
+		int arr[] = {64, 34, 25, 12, 22, 11, 90};
+		ob.bubbleSort(arr);
+		System.out.println("Sorted array");
+		ob.printArray(arr);
+	}
+}
+/* This code is contributed by Rajat Mishra */
+
+```
+#### 1.1.2 QuickSort
+```
+/* low  --> Starting index,  high  --> Ending index */
+quickSort(arr[], low, high)
+{
+    if (low < high)
+    {
+        /* pi is partitioning index, arr[pi] is now
+           at right place */
+        pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);  // Before pi
+        quickSort(arr, pi + 1, high); // After pi
+    }
+}
+
+
+	static void sort(int arr[], int start, int end) {
+		if (start < end) {
+			int pIndex = partition(arr, start, end);
+			sort(arr, start, pIndex - 1);
+			sort(arr, pIndex + 1, end);
+		}
+	}
+
+	static int partition(int arr[], int start, int end) {
+		int pivot = arr[end];
+		int pIndex = start;
+		for (int i = start; i < end; i++) {
+			if (arr[i] <= pivot) {
+				swap(arr, i, pIndex);
+				pIndex++;
+			}
+		}
+		swap(arr, pIndex, end);
+		return pIndex;
+	}
+
+	static void swap(int arr[], int x, int y) {
+		int temp = arr[x];
+		arr[x] = arr[y];
+		arr[y] = temp;
+	}
+```
+
+#### 1.2插入排序
+#### 1.2.1 InsertionSort
+
+```
+// Java program for implementation of Insertion Sort
+class InsertionSort {
+	/*Function to sort array using insertion sort*/
+	void sort(int arr[])
+	{
+		int n = arr.length;
+		for (int i = 1; i < n; ++i) {
+			int key = arr[i];
+			int j = i - 1;
+
+			/* Move elements of arr[0..i-1], that are
+			greater than key, to one position ahead
+			of their current position */
+			while (j >= 0 && arr[j] > key) {
+				arr[j + 1] = arr[j];
+				j = j - 1;
+			}
+			arr[j + 1] = key;
+		}
+	}
+
+	/* A utility function to print array of size n*/
+	static void printArray(int arr[])
+	{
+		int n = arr.length;
+		for (int i = 0; i < n; ++i)
+			System.out.print(arr[i] + " ");
+
+		System.out.println();
+	}
+
+	// Driver method
+	public static void main(String args[])
+	{
+		int arr[] = { 12, 11, 13, 5, 6 };
+
+		InsertionSort ob = new InsertionSort();
+		ob.sort(arr);
+
+		printArray(arr);
+	}
+} /* This code is contributed by Rajat Mishra. */
+
+```
+#### 1.2.2  ShellSort
+
+```
+// Java implementation of ShellSort
+class ShellSort
+{
+	/* An utility function to print array of size n*/
+	static void printArray(int arr[])
+	{
+		int n = arr.length;
+		for (int i=0; i<n; ++i)
+			System.out.print(arr[i] + " ");
+		System.out.println();
+	}
+
+	/* function to sort arr using shellSort */
+	int sort(int arr[])
+	{
+		int n = arr.length;
+
+		// Start with a big gap, then reduce the gap
+		for (int gap = n/2; gap > 0; gap /= 2)
+		{
+			// Do a gapped insertion sort for this gap size.
+			// The first gap elements a[0..gap-1] are already
+			// in gapped order keep adding one more element
+			// until the entire array is gap sorted
+			for (int i = gap; i < n; i += 1)
+			{
+				// add a[i] to the elements that have been gap
+				// sorted save a[i] in temp and make a hole at
+				// position i
+				int temp = arr[i];
+
+				// shift earlier gap-sorted elements up until
+				// the correct location for a[i] is found
+				int j;
+				for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
+					arr[j] = arr[j - gap];
+
+				// put temp (the original a[i]) in its correct
+				// location
+				arr[j] = temp;
+			}
+		}
+		return 0;
+	}
+
+	// Driver method
+	public static void main(String args[])
+	{
+		int arr[] = {12, 34, 54, 2, 3};
+		System.out.println("Array before sorting");
+		printArray(arr);
+
+		ShellSort ob = new ShellSort();
+		ob.sort(arr);
+
+		System.out.println("Array after sorting");
+		printArray(arr);
+	}
+}
+/*This code is contributed by Rajat Mishra */
+
+```
+#### 1.3  MergeSort
+
+```
+// Recursive Java Program for merge sort
+
+import java.util.Arrays;
+public class GFG
+{
+	public static void mergeSort(int[] array)
+	{
+		if(array == null)
+		{
+			return;
+		}
+
+		if(array.length > 1)
+		{
+			int mid = array.length / 2;
+
+			// Split left part
+			int[] left = new int[mid];
+			for(int i = 0; i < mid; i++)
+			{
+				left[i] = array[i];
+			}
+			
+			// Split right part
+			int[] right = new int[array.length - mid];
+			for(int i = mid; i < array.length; i++)
+			{
+				right[i - mid] = array[i];
+			}
+			mergeSort(left);
+			mergeSort(right);
+
+			int i = 0;
+			int j = 0;
+			int k = 0;
+
+			// Merge left and right arrays
+			while(i < left.length && j < right.length)
+			{
+				if(left[i] < right[j])
+				{
+					array[k] = left[i];
+					i++;
+				}
+				else
+				{
+					array[k] = right[j];
+					j++;
+				}
+				k++;
+			}
+			// Collect remaining elements
+			while(i < left.length)
+			{
+				array[k] = left[i];
+				i++;
+				k++;
+			}
+			while(j < right.length)
+			{
+				array[k] = right[j];
+				j++;
+				k++;
+			}
+		}
+	}
+
+	// Driver program to test above functions.
+	public static void main(String[] args)
+	{
+		int arr[] = {12, 11, 13, 5, 6, 7};
+		int i=0;
+		System.out.println("Given array is");
+
+		for(i=0; i<arr.length; i++)
+			System.out.print(arr[i]+" ");
+
+		mergeSort(arr);
+
+		System.out.println("\n");
+		System.out.println("Sorted array is");
+
+		for(i=0; i<arr.length; i++)
+			System.out.print(arr[i]+" ");
+	}
+}
+
+// Code Contributed by Mohit Gupta_OMG
+
+```
+#### 1.1.4 Counting Sort
+
+```
+// Recursive Java Program for merge sort
+
+import java.util.Arrays;
+public class GFG
+{
+	public static void mergeSort(int[] array)
+	{
+		if(array == null)
+		{
+			return;
+		}
+
+		if(array.length > 1)
+		{
+			int mid = array.length / 2;
+
+			// Split left part
+			int[] left = new int[mid];
+			for(int i = 0; i < mid; i++)
+			{
+				left[i] = array[i];
+			}
+			
+			// Split right part
+			int[] right = new int[array.length - mid];
+			for(int i = mid; i < array.length; i++)
+			{
+				right[i - mid] = array[i];
+			}
+			mergeSort(left);
+			mergeSort(right);
+
+			int i = 0;
+			int j = 0;
+			int k = 0;
+
+			// Merge left and right arrays
+			while(i < left.length && j < right.length)
+			{
+				if(left[i] < right[j])
+				{
+					array[k] = left[i];
+					i++;
+				}
+				else
+				{
+					array[k] = right[j];
+					j++;
+				}
+				k++;
+			}
+			// Collect remaining elements
+			while(i < left.length)
+			{
+				array[k] = left[i];
+				i++;
+				k++;
+			}
+			while(j < right.length)
+			{
+				array[k] = right[j];
+				j++;
+				k++;
+			}
+		}
+	}
+
+	// Driver program to test above functions.
+	public static void main(String[] args)
+	{
+		int arr[] = {12, 11, 13, 5, 6, 7};
+		int i=0;
+		System.out.println("Given array is");
+
+		for(i=0; i<arr.length; i++)
+			System.out.print(arr[i]+" ");
+
+		mergeSort(arr);
+
+		System.out.println("\n");
+		System.out.println("Sorted array is");
+
+		for(i=0; i<arr.length; i++)
+			System.out.print(arr[i]+" ");
+	}
+}
+
+// Code Contributed by Mohit Gupta_OMG
+
+```
