@@ -16,13 +16,13 @@ class Solution {
 
 // 对数组进行排序，然后找出次数大于n/2的元素
 
-class Solution {
+class Solution1 {
     public int majorityElement(int[] nums) {
         Array.sort(nums);
         return nums[nums.length >> 1];
     }
 }
-class Solution {
+class Solution2 {
     public int majorityElement(int[] nums) {
         int len = (nums.length + 1) >> 1;
         PriorityQueue<Integer> pQueue = new PriorityQueue<>(len,Comparator.comparingInt(item -> -item));
